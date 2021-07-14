@@ -1,7 +1,6 @@
 const fs = require("fs");
-
+const path = require("path");
 const __parentDir = require.main;
-console.log(__parentDir);
 
 class ConsoleColors {
   constructor(name, foreground, background) {
@@ -47,7 +46,8 @@ class Debug {
       this.config={};
     }
     if (typeof this.config.file == "undefined") {
-      this.config.file="./colorfullog.config.json";
+      this.config.file=path.join(__parentDir.path,"colorfullog.config.json");
+      console.log(this.config.file);
     }
     if (fs.existsSync(this.config.file)) {
       this.config = require(this.config.file);
@@ -102,7 +102,8 @@ class Debug {
   }
   getOutputString(text, type) {
     let output ="";
-
+    type = type.toUpperCase();
+    
     this.setupConfig();
     if (this.config.printType) {
       output += "["+type+"] ";
@@ -123,3 +124,5 @@ class Debug {
 }
 
 module.exports = Debug;
+var d = new Debug();
+d.log("test");
