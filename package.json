@@ -1,0 +1,20 @@
+{
+  "name": "sk_colorfullog",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Istani/nodemodule_colorfullog.git"
+  },
+  "keywords": [],
+  "author": "Sascha Kaufmann (sascha.u.kaufmann@googlemail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Istani/nodemodule_colorfullog/issues"
+  },
+  "homepage": "https://github.com/Istani/nodemodule_colorfullog#readme"
+}

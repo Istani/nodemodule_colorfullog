@@ -1,0 +1,10 @@
+{
+  "file": "./colorfullog.config.json",
+  "printType": true,
+  "printTime": true,
+  "colors": {
+    "A": "Blue",
+    "C": "Green",
+    "B": "Red"
+  }
+}
