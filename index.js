@@ -10,14 +10,14 @@ class ConsoleColors {
   }
 }
 const allColors = [
-  new ConsoleColors('Black',          '\x1b[30m', '\x1b[40m'),
+  //new ConsoleColors('Black',          '\x1b[30m', '\x1b[40m'),
   new ConsoleColors('Red',            '\x1b[31m', '\x1b[41m'),
   new ConsoleColors('Green',          '\x1b[32m', '\x1b[42m'),
   new ConsoleColors('Yellow',         '\x1b[33m', '\x1b[43m'),
   new ConsoleColors('Blue',           '\x1b[34m', '\x1b[44m'),
   new ConsoleColors('Magenta',        '\x1b[35m', '\x1b[45m'),
   new ConsoleColors('Cyan',           '\x1b[36m', '\x1b[46m'),
-  new ConsoleColors('White',          '\x1b[37m', '\x1b[47m'),
+  //new ConsoleColors('White',          '\x1b[37m', '\x1b[47m'),
 
   new ConsoleColors('Light Gray',     '\x1b[90m', '\x1b[100m'),
   new ConsoleColors('Light Red',      '\x1b[91m', '\x1b[101m'),
@@ -34,23 +34,18 @@ function findColorByName(color, name) {
 
 const DefaultColor = new ConsoleColors('Default', '\x1b[39m', '\x1b[49m');
 const StringDefault="default".toUpperCase();
+const config_path=path.join(__parentDir.path,"colorfullog.config.json");
 
 class Debug {
-  constructor(config={}) {
-    // TODO: Config Things
-    this.config = config;
+  constructor() {
     this.setupConfig();
   };
   setupConfig() {
     if (typeof this.config == "undefined") {
       this.config={};
     }
-    if (typeof this.config.file == "undefined") {
-      this.config.file=path.join(__parentDir.path,"colorfullog.config.json");
-      console.log(this.config.file);
-    }
-    if (fs.existsSync(this.config.file)) {
-      this.config = require(this.config.file);
+    if (fs.existsSync(config_path)) {
+      this.config = require(config_path);
     }
 
     if (typeof this.config.colors == "undefined") {
@@ -65,11 +60,9 @@ class Debug {
     }
     this.saveConfig();
   }
+  
   saveConfig() {
-    if (typeof this.config.file == "undefined") {
-      //setupConfig();
-    }
-    fs.writeFileSync(this.config.file, JSON.stringify(this.config, null, 2));
+    fs.writeFileSync(config_path, JSON.stringify(this.config, null, 2));
   }
 
   log(text, type=StringDefault) {
@@ -105,11 +98,11 @@ class Debug {
     type = type.toUpperCase();
     
     this.setupConfig();
-    if (this.config.printType) {
-      output += "["+type+"] ";
-    }
     if (this.config.printTime) {
       output += new Date().toISOString() +": ";
+    }
+    if (this.config.printType) {
+      output += "["+type+"] ";
     }
     output += text;
     return output;
@@ -124,5 +117,3 @@ class Debug {
 }
 
 module.exports = Debug;
-var d = new Debug();
-d.log("test");
