@@ -2,6 +2,14 @@ const fs = require("fs");
 const path = require("path");
 const __parentDir = require.main;
 
+// TODO: Fix this mess!
+if (typeof __parentDir.path == "undefined") {
+  var tmp_str = __parentDir.filename.split("/");
+  tmp_str.pop();
+  var tmp_path = tmp_str.join("/");
+  __parentDir.path=tmp_path;
+}
+
 class ConsoleColors {
   constructor(name, foreground, background) {
     this.name = name;
