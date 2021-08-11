@@ -17,6 +17,7 @@ class ConsoleColors {
     this.background = background;
   }
 }
+// https://github.com/shiena/ansicolor/blob/master/README.md
 const allColors = [
   //new ConsoleColors('Black',          '\x1b[30m', '\x1b[40m'),
   new ConsoleColors('Red',            '\x1b[31m', '\x1b[41m'),
@@ -99,6 +100,11 @@ class Debug {
         this.saveConfig();
       }
       currentColor=allColors.find(c => c.name===this.config.colors[type]);
+      if (typeof currentColor=="undefined") {
+        this.config.colors[type]=this.getRandomColor().name;
+        this.saveConfig();
+        currentColor=allColors.find(c => c.name===this.config.colors[type]);
+      }
     }
     return currentColor;
   }
