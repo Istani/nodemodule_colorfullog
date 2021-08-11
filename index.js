@@ -126,7 +126,3 @@ class Debug {
 }
 
 module.exports = new Debug();
-
-
-var d = new Debug();
-console.log(d.converter.buffer_hex2text(new Buffer.from([0x31,0x32])));
