@@ -47,6 +47,7 @@ const config_path=path.join(__parentDir.path,"colorfullog.config.json");
 class Debug {
   constructor() {
     this.setupConfig();
+    this.converter=require('./lib/converter.js')
   };
   setupConfig() {
     if (typeof this.config == "undefined") {
@@ -124,4 +125,8 @@ class Debug {
   }
 }
 
-module.exports = Debug;
+module.exports = new Debug();
+
+
+var d = new Debug();
+console.log(d.converter.buffer_hex2text(new Buffer.from([0x31,0x32])));
