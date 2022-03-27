@@ -2,14 +2,6 @@ const fs = require("fs");
 const path = require("path");
 const __parentDir = require.main;
 
-// TODO: Fix this mess!
-if (typeof __parentDir.path == "undefined") {
-  var tmp_str = __parentDir.filename.split("/");
-  tmp_str.pop();
-  var tmp_path = tmp_str.join("/");
-  __parentDir.path=tmp_path;
-}
-
 class ConsoleColors {
   constructor(name, foreground, background) {
     this.name = name;
@@ -43,7 +35,7 @@ function findColorByName(color, name) {
 
 const DefaultColor = new ConsoleColors('Default', '\x1b[39m', '\x1b[49m');
 const StringDefault="default".toUpperCase();
-let config_path=path.join(__dirname,"colorfullog.config.json");
+const config_path=path.join(__dirname,"colorfullog.config.json");
 
 class Debug {
   constructor() {
