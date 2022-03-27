@@ -43,7 +43,7 @@ function findColorByName(color, name) {
 
 const DefaultColor = new ConsoleColors('Default', '\x1b[39m', '\x1b[49m');
 const StringDefault="default".toUpperCase();
-const config_path=path.join(__parentDir.path,"colorfullog.config.json");
+let config_path=path.join(__dirname,"colorfullog.config.json");
 
 class Debug {
   constructor() {
