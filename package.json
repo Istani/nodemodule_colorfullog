@@ -7,7 +7,9 @@
     "start": "node index.js",
     "test": "",
     "build": "pwd",
-    "commit": "git add . && git status && git cz && git push"
+    "git-add": "git add . && git status",
+    "git-commit": "git cz",
+    "git-push": "git push"
   },
   "devDependencies": {
     "cz-conventional-changelog": "^3.0.1"
