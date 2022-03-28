@@ -9,7 +9,8 @@
     "build": "pwd",
     "git-add": "git add . && git status",
     "git-commit": "git cz",
-    "git-push": "git push"
+    "git-push": "git push",
+    "git-update": "git checkout main && git pull"
   },
   "devDependencies": {
     "cz-conventional-changelog": "^3.0.1"
