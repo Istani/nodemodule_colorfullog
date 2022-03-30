@@ -60,11 +60,19 @@ class Debug {
     if (typeof this.config.printTime == 'undefined') {
       this.config.printTime = true;
     }
-    this.saveConfig();
+    if (!fs.existsSync(config_path)) {
+      this.saveConfig();
+    }
   }
 
   saveConfig() {
     fs.writeFileSync(config_path, JSON.stringify(this.config, null, 2));
+  }
+  addColor(type, name) {
+    // ! Or else the diffrent Instance will Overwirte it ?!?!
+    this.setupConfig(); // Reload Config!
+    this.config.colors[type] = name;
+    this.saveConfig();
   }
 
   log(text, type = StringDefault) {
@@ -88,13 +96,11 @@ class Debug {
 
     if (type != StringDefault) {
       if (typeof this.config.colors[type] == 'undefined') {
-        this.config.colors[type] = this.getRandomColor().name;
-        this.saveConfig();
+        this.addColor(type, this.getRandomColor().name)
       }
       currentColor = allColors.find((c) => c.name === this.config.colors[type]);
       if (typeof currentColor == 'undefined') {
-        this.config.colors[type] = this.getRandomColor().name;
-        this.saveConfig();
+        this.addColor(type, this.getRandomColor().name)
         currentColor = allColors.find(
           (c) => c.name === this.config.colors[type]
         );
