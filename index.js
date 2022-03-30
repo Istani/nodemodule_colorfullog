@@ -96,11 +96,11 @@ class Debug {
 
     if (type != StringDefault) {
       if (typeof this.config.colors[type] == 'undefined') {
-        this.addColor(type, this.getRandomColor().name)
+        this.addColor(type, this.getRandomColor().name);
       }
       currentColor = allColors.find((c) => c.name === this.config.colors[type]);
       if (typeof currentColor == 'undefined') {
-        this.addColor(type, this.getRandomColor().name)
+        this.addColor(type, this.getRandomColor().name);
         currentColor = allColors.find(
           (c) => c.name === this.config.colors[type]
         );
