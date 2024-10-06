@@ -1,3 +1,4 @@
 {
-  "root": "packages/debug"
+  "name": "debug",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json"
 }

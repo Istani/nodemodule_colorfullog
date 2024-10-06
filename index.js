@@ -9,6 +9,7 @@ class ConsoleColors {
     this.background = background;
   }
 }
+
 // https://github.com/shiena/ansicolor/blob/master/README.md
 const allColors = [
   //new ConsoleColors('Black',          '\x1b[30m', '\x1b[40m'),
@@ -34,14 +35,15 @@ function findColorByName(color, name) {
 }
 
 const DefaultColor = new ConsoleColors('Default', '\x1b[39m', '\x1b[49m');
-const StringDefault = 'default'.toUpperCase();
 const config_path = path.join(__dirname, 'colorfullog.config.json');
 
 class Debug {
-  constructor() {
+  constructor(Packages_Name) {
     this.setupConfig();
     this.converter = require('./lib/converter.js');
+    this.packages_name = Packages_Name.toUpperCase();
   }
+
   setupConfig() {
     if (typeof this.config == 'undefined') {
       this.config = {};
@@ -68,6 +70,7 @@ class Debug {
   saveConfig() {
     fs.writeFileSync(config_path, JSON.stringify(this.config, null, 2));
   }
+
   addColor(type, name) {
     // ! Or else the diffrent Instance will Overwirte it ?!?!
     this.setupConfig(); // Reload Config!
@@ -75,14 +78,14 @@ class Debug {
     this.saveConfig();
   }
 
-  log(text, type = StringDefault) {
-    let output = this.getOutputString(text, type);
-    let currentColor = this.getCurrentColor(type);
+  log(text) {
+    let output = this.getOutputString(text);
+    let currentColor = this.getCurrentColor(this.packages_name);
 
     console.log(currentColor.foreground + output + DefaultColor.foreground);
   }
-  error(text, type = StringDefault) {
-    let output = this.getOutputString(text, type);
+  error(text) {
+    let output = this.getOutputString(text);
     let currentColor = this.getCurrentColor(type);
 
     console.log(currentColor.background + output + DefaultColor.background);
@@ -94,30 +97,28 @@ class Debug {
     type = type.toUpperCase();
     this.setupConfig();
 
-    if (type != StringDefault) {
-      if (typeof this.config.colors[type] == 'undefined') {
-        this.addColor(type, this.getRandomColor().name);
-      }
-      currentColor = allColors.find((c) => c.name === this.config.colors[type]);
-      if (typeof currentColor == 'undefined') {
-        this.addColor(type, this.getRandomColor().name);
-        currentColor = allColors.find(
-          (c) => c.name === this.config.colors[type]
-        );
-      }
+    if (typeof this.config.colors[type] == 'undefined') {
+      this.addColor(type, this.getRandomColor().name);
+    }
+    currentColor = allColors.find((c) => c.name === this.config.colors[type]);
+    if (typeof currentColor == 'undefined') {
+      this.addColor(type, this.getRandomColor().name);
+      currentColor = allColors.find(
+        (c) => c.name === this.config.colors[type]
+      );
     }
     return currentColor;
   }
-  getOutputString(text, type) {
+
+  getOutputString(text) {
     let output = '';
-    type = type.toUpperCase();
 
     this.setupConfig();
     if (this.config.printTime) {
       output += new Date().toISOString() + ': ';
     }
     if (this.config.printType) {
-      output += '[' + type + '] ';
+      output += '[' + this.packages_name + '] ';
     }
     output += text;
     return output;
@@ -126,9 +127,10 @@ class Debug {
   getAllColors() {
     return allColors;
   }
+  
   getRandomColor() {
     return allColors[Math.floor(Math.random() * allColors.length)];
   }
 }
 
-module.exports = new Debug();
+module.exports = (name) => {return new Debug(name)};
