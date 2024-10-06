@@ -1,16 +1,11 @@
 {
-  "name": "sk_colorfullog",
+  "name": "@istani/debug",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "",
-    "build": "pwd",
-    "git-add": "git add . && git status",
-    "git-commit": "git cz",
-    "git-push": "git push",
-    "git-update": "git checkout main && git pull"
+    "test": "node app.js"
   },
   "devDependencies": {
     "cz-conventional-changelog": "^3.0.1"
