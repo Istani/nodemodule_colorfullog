@@ -86,7 +86,7 @@ class Debug {
   }
   error(text) {
     let output = this.getOutputString(text);
-    let currentColor = this.getCurrentColor(type);
+    let currentColor = this.getCurrentColor(this.packages_name);
 
     console.log(currentColor.background + output + DefaultColor.background);
   }
