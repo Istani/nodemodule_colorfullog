@@ -33,6 +33,19 @@ const allColors = [
 function findColorByName(color, name) {
   return color.name == name;
 }
+function toIsoLocal() {
+  const date = new Date();
+  const tzOffset = -date.getTimezoneOffset();
+  const diff = tzOffset >= 0 ? '+' : '-';
+  const pad = n => String(Math.floor(Math.abs(n))).padStart(2, '0');
+  return date.getFullYear() +
+    '-' + pad(date.getMonth() + 1) +
+    '-' + pad(date.getDate()) +
+    'T' + pad(date.getHours()) +
+    ':' + pad(date.getMinutes()) +
+    ':' + pad(date.getSeconds()) +
+    diff + pad(tzOffset / 60) + ':' + pad(tzOffset % 60);
+}
 
 const DefaultColor = new ConsoleColors('Default', '\x1b[39m', '\x1b[49m');
 const config_path = path.join(__dirname, 'colorfullog.config.json');
@@ -115,7 +128,7 @@ class Debug {
 
     this.setupConfig();
     if (this.config.printTime) {
-      output += new Date().toISOString() + ': ';
+      output += toIsoLocal() + ': ';
     }
     if (this.config.printType) {
       output += '[' + this.packages_name + '] ';
